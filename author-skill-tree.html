@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8" />
+    <title>Demo of the tree layout in D3.js</title>
+
+    <style>
+        .level {
+            font-style: italic !important;
+        }
+    
+        g.node {
+            font-family: Verdana, Helvetica;
+            font-size: 12px;
+            font-weight: bold;
+            
+            z-index:1000;
+        }
+        
+        circle.node-dot {
+            fill: lightgrey;
+            stroke: black;
+            stroke-width: 1px;
+        }        
+        circle.enabled {
+            fill: lightsalmon !important;
+            stroke: red !important;
+            stroke-width: 1px;
+        }
+
+        path.link {
+            fill: none;
+            stroke: gray;
+        }
+        
+        svg {
+        cursor:default;
+        
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+
+        /*
+         Introduced in IE 10.
+         See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+        */
+        -ms-user-select: none;
+        user-select: none;
+        }        
+    </style>
+    
+<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="skilltree.txt"></script>
+
+<script>
+//Shamelessly stolen and repurposed from D3.js
+function diagonal(source,target) {
+  var p0 = source, 
+  p3 = target, 
+  m = (p0.y + p3.y) / 2, 
+  p = [ p0, {
+    x: p0.x,
+    y: m
+  }, {
+    x: p3.x,
+    y: m
+  }, p3 ];
+  return "M" + p[0].x+","+p[0].y + "C" + p[1].x+","+p[1].y + " " + p[2].x+","+p[2].y + " " + p[3].x+","+p[3].y;
+}
+
+//My own terrible code
+function createHashedArray(){
+    data.hashedNodes = [];
+    $(data.nodes).each(function(index){
+        data.hashedNodes[this.id]=this;
+    });
+}
+function getNode(id){
+    return data.hashedNodes[String(id).replace("node","")];
+}
+function isNodeActive(nodeId){
+    var node = getNode(nodeId);
+
+    var parentsActive = false;
+    if(node.parents.length>0){
+        $(node.parents).each(function(index){
+            var parentNode = getNode(this);
+            if(parentNode.points>0 && isNodeActive(parentNode.id)){
+                parentsActive = true;
+            }
+        });
+    }else{
+        parentsActive = true;
+    }    
+    
+    if(node.points<=0){
+        return false;
+    }
+    
+    return Boolean(parentsActive);
+}
+
+//This function is terrible and should be refactored for a proper
+//depth first search.
+function cleanState(){
+    var nodes = $('.node');
+    //nodes.each(function(){
+        for(var i = nodes.length-1; i>=0; i--){
+            var _this = nodes[i];
+            var node = getNode(_this.id);
+            var circle = _this.getElementsByTagName('circle')[0];
+            if(isNodeActive(_this.id)){
+                circle.setAttribute('class','enabled');        
+            }else{
+                circle.setAttribute('class','node-dot');
+                node.points = 0;
+            }
+            
+            document.getElementById("pts"+node.id).textContent = node.points;
+        }
+        
+        
+        for(var i = 0; i<nodes.length; i++){
+            var _this = nodes[i];
+            var node = getNode(_this.id);
+            var circle = _this.getElementsByTagName('circle')[0];
+            
+            var parentsActive = false;
+            $(node.parents).each(function(){
+                var parentNode = getNode(this);
+                if(isNodeActive(parentNode.id)){
+                    parentsActive = true;
+                }
+            });
+            if( (node.parents.length==0 || parentsActive) && (node.points<=0)){
+                circle.setAttribute('class','node-dot large');
+            }
+        }
+
+        $('circle').each(function(){
+            this.setAttribute("style","stroke: black; stroke-width:1px");
+        }); 
+/*        
+        $('.large').each(function(){
+            this.setAttribute("style","stroke: black; stroke-width:2px");
+        });
+*/
+        $('.large').animate({
+            strokeWidth: 2,
+          }, 500);        
+        
+    //})
+    
+    showActiveLevels2();
+}
+
+function getQueryStringArray(){
+    //http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values/901144#901144
+    var qs = (function(a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i)
+        {
+            var p=a[i].split('=');
+            if (p.length != 2) continue;
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'));
+    return qs;
+};
+
+function loadData(){
+    var qs = getQueryStringArray();
+    $(data.hashedNodes).each(function(){
+        if(qs[this.id]){
+            this.points = qs[this.id];
+        }
+    });
+    
+    cleanState();
+    showActiveLevels2();
+    generateReport();    
+}
+function saveData(){
+    var dataObject = {};
+    $(data.hashedNodes).each(function(){
+        if(this.points>0){
+            dataObject[this.id] = this.points;
+        }
+    });
+    var result = jQuery.param(dataObject);
+    var loc = window.location.href.split("?");
+    return loc[0] +"?"+ result;
+}
+
+$().ready(function(){
+    createHashedArray();
+
+    //Create our diagonal links.  Progressive enhancement means they should
+    //remain straight for older browsers
+    var a = $('.link');
+    for(var i=0; i<a.length; i++){
+        var e = a[i];
+        var data = e.getAttribute('d').slice(1).split(" ");
+        p1 = data[0].split(",");
+        p1 = {  x:  parseInt(p1[0]),
+                y:  parseInt(p1[1])
+            }
+        
+        p2 = data[1].split(",");
+        p2 = {  x:  parseInt(p2[0]),
+                y:  parseInt(p2[1])
+            }
+        e.setAttribute("d",diagonal(p1,p2));
+    }
+    
+    loadData();
+    
+    //Point handlers
+    $('.node').mousedown(function(event) {
+        var node = getNode(this.id);
+        switch (event.which) {
+            case 1:
+                if(node.points < 3){
+                node.points++;
+                }
+                break;
+            case 3:
+                if(node.points > 0 ){
+                    node.points--;
+                }
+                break;
+        }
+        document.getElementById("pts"+node.id).textContent = node.points;
+        cleanState();
+        showActiveLevels2();
+        generateReport();
+    });
+});
+</script>
+
+<script type="text/javascript" src="jquery.hovercard.js"></script>
+<script type="text/javascript">
+function generateBasicDescription(){
+    var node = getNode(this.id.replace("label",""));
+    if(node.description && node.description.base){
+        var htmlString = "<p>"+node.description.base+"</p>";
+        $.each(node.description,function(key,value){
+            var level = key.split("level");
+            if(level.length==2){
+                htmlString +=   "<p class='lvl' style='display:none;' data:level='"+level[1]+"'>"
+                    +           "<span class='level'>Level "
+                    +level[1]+  ":</span> <span class='description'>"
+                    +value+     "</span></p>";
+            }
+        });
+    }
+    return htmlString;
+}
+function showActiveLevels(){
+    var node = getNode($(this).find('.label')[0].id.replace('label',''));
+    $(this).find('.lvl').each(function(){this.style.display='none';});
+    $(this).find('.lvl').each(function(){
+        if(node.points >= parseInt(this.getAttribute("data:level"))){
+            this.style.display='';
+        }
+    });
+}
+function showActiveLevels2(){
+    var labels = $('.label').each(function(){
+        var parentNode = this.parentNode;
+        var node = getNode($(parentNode).find('.label')[0].id.replace('label',''));
+        $(parentNode).find('.lvl').each(function(){this.style.display='none';});
+        $(parentNode).find('.lvl').each(function(){
+            if(node.points >= parseInt(this.getAttribute("data:level"))){
+                this.style.display='';
+            }
+        });
+    });
+}
+function generateReport(){
+    $('#reportDetails').html('&nbsp;');
+    $(data.nodes).each(function(){
+        var node = getNode(this.id);
+        if(node.points > 0 ){
+            if(node.description && node.description.base){
+                var htmlString = "<div>"+node.description.base+"</div>";
+                $.each(node.description,function(key,value){
+                    var level = key.split("level");
+                    if(level.length==2 && node.points>=level[1]){
+                        htmlString +=   "<div><span class='level'>Level "
+                            +level[1]+  ":</span> <span class='description'>"
+                            +value+     "</span></div>";
+                    }
+                });
+                htmlString = "<div style='font-weight: bold'>"+node.name+"</div>"+htmlString+"<hr />";
+            }
+            $('#reportDetails').append(htmlString);
+        };
+    });
+}
+function createImg(){
+    var node = getNode(this.id.replace("label",""));
+    var imgSrc = "";
+    if(node.description && node.description.image){
+        imgSrc = node.description.image;
+    }
+    return imgSrc;
+}
+
+$(document).ready(function () {
+    $(".label").hovercard({
+        detailsHTML: generateBasicDescription,
+        width: 300,
+        delay: 250,
+        onHoverIn: showActiveLevels,
+        cardImgSrc: createImg
+    });
+});
+
+window.oncontextmenu = function(event) {
+    if(event.target && event.target.id == "data"){
+        return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+};
+</script>
+
+    
+</head>
+<body>
+<div id="tree-container" style="float: left; position: relative; left: -300px; top: -90px;">
+<svg width="1000" height="1000" >
+<g class="container">
+    <path class="link" d="M500,100 600,200"></path>
+    <path class="link" d="M500,100 400,200"></path>     
+    <path class="link" d="M600,200 500,300"></path>
+    <path class="link" d="M400,200 500,300"></path>
+    <path class="link" d="M500,300 600,400"></path>
+    <path class="link" d="M500,300 400,400"></path>    
+    <path class="link" d="M600,400 700,500"></path>    
+    <path class="link" d="M400,400 400,500"></path>    
+    <path class="link" d="M700,500 800,600"></path>
+    <path class="link" d="M700,500 600,600"></path>
+    <path class="link" d="M700,500 700,600"></path>    
+    <path class="link" d="M800,600 750,700"></path>
+    <path class="link" d="M800,600 850,700"></path>  
+
+
+    <g class="node" id="node0" transform="translate(500,100)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts0" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="522" y="92" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label0">Wannabe</span></body>
+        </foreignobject>
+    </g>
+
+    <g class="node" id="node1" transform="translate(600,200)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts1" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="622" y="192" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label1">Hobbiest</span></body>
+        </foreignobject>        
+    </g>
+
+    <g class="node" id="node2" transform="translate(400,200)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts2" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="422" y="192" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label2">Serious</span></body>
+        </foreignobject>            
+    </g>
+  
+    <g class="node" id="node3" transform="translate(500,300)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts3" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="522" y="292" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label3">Actually wrote novel</span></body>
+        </foreignobject>          
+    </g>
+
+    <g class="node" id="node4" transform="translate(600,400)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts4" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="622" y="392" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label4">Get an agent interested</span></body>
+        </foreignobject>           
+    </g>
+
+    <g class="node" id="node5" transform="translate(400,400)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts5" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="422" y="392" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label5">Self publish</span></body>
+        </foreignobject>             
+    </g>
+
+    <g class="node" id="node6" transform="translate(400,500)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts6" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="422" y="492" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label6">Social Media Darling</span></body>
+        </foreignobject>           
+    </g>    
+    
+    <g class="node" id="node7" transform="translate(700,500)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts7" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="722" y="492" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label7">Hardcore Author</span></body>
+        </foreignobject>   
+    </g>
+ 
+    <g class="node" id="node8" transform="translate(800,600)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts8" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="822" y="592" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label8">Isolation</span></body>
+        </foreignobject>           
+    </g>
+ 
+    <g class="node" id="node9" transform="translate(600,600)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts9" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="622" y="592" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label9">Sage</span></body>
+        </foreignobject>          
+    </g>    
+    
+    <g class="node" id="node12" transform="translate(700,600)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts12" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="722" y="592" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label12">Mogul</span></body>
+        </foreignobject>               
+    </g>
+
+    <g class="node" id="node10" transform="translate(750,700)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts10" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="772" y="692" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label10">Artiste</span></body>
+        </foreignobject>        
+    </g>          
+ 
+    <g class="node" id="node11" transform="translate(850,700)">
+        <circle class="node-dot" r="10"></circle>
+        <text class="pts" id="pts11" text-anchor="middle" dx="0" dy="4">0</text>
+        <foreignobject x="872" y="692" width="180" height="180">
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label11">Recluse</span></body>
+        </foreignobject>          
+    </g>          
+ 
+</g>
+</svg>
+</div>
+
+<div>
+ <button onclick="javascript:$('#data')[0].value=saveData();$('#data')[0].select();return false;">Create sharable link</button>
+ <br/>
+ <textarea cols="30" rows="5" name="data" id="data" ></textarea>
+</div>
+
+<br style="clear: both" />
+
+<div id="report">
+    <div>Summary:</div>
+    <div id="reportDetails">&nbsp;</div>
+</div>
+<br style="clear: both" />
+
+<div id="credits">
+    <div id="flickrCredits">
+    <h3>Image Credits</h3>
+    <a href="http://www.flickr.com/photos/38069266@N05/5447366517/" title="???? ??????? the7eye.org.il, on Flickr"><img src="http://farm6.staticflickr.com/5137/5447366517_4f93dfb16e_s.jpg" width="75" height="75" alt="????"></a>
+
+    <a href="http://www.flickr.com/photos/gscsnj/7882614208/" title="Woman and young girl in kitchen with laptop and paperwork smiling by GSCSNJ, on Flickr"><img src="http://farm9.staticflickr.com/8019/7882614208_79076cf92e_s.jpg" width="75" height="75" alt="Woman and young girl in kitchen with laptop and paperwork smiling"></a>
+
+    <a href="http://www.flickr.com/photos/sunlitrain/304341392/" title="Write-in @ Mozart's 2 by stetted, on Flickr"><img src="http://farm1.staticflickr.com/115/304341392_3d3f4daaac_s.jpg" width="75" height="75" alt="Write-in @ Mozart's 2"></a>
+
+    <a href="http://www.flickr.com/photos/arriabelli/2344309646/" title="Magazine and book by Arria Belli, on Flickr"><img src="http://farm4.staticflickr.com/3215/2344309646_3434a40c3f_s.jpg" width="75" height="75" alt="Magazine and book"></a>
+
+    <a href="http://www.flickr.com/photos/38314728@N08/4193859795/" title="Don't make the mistake I did! Use print on demand by TheCreativePenn, on Flickr"><img src="http://farm3.staticflickr.com/2785/4193859795_36bb69ec4e_s.jpg" width="75" height="75" alt="Don't make the mistake I did! Use print on demand"></a>
+
+    <a href="http://www.flickr.com/photos/sanjoselibrary/5384658915/" title="Author David Aguilar by San José Library, on Flickr"><img src="http://farm6.staticflickr.com/5219/5384658915_bd43e67792_s.jpg" width="75" height="75" alt="Author David Aguilar"></a>
+
+    <a href="http://www.flickr.com/photos/eschipul/437288525/" title="Cory Doctorow @ eTech 2007 by eschipul, on Flickr"><img src="http://farm1.staticflickr.com/176/437288525_01a05ada4f_s.jpg" width="75" height="75" alt="Cory Doctorow @ eTech 2007"></a>
+
+    <a href="http://www.flickr.com/photos/megmccarron/4062799418/" title="with bag by megmccarron, on Flickr"><img src="http://farm3.staticflickr.com/2641/4062799418_efb49bccb2_s.jpg" width="75" height="75" alt="with bag"></a>
+
+    <a href="http://www.flickr.com/photos/pinguino/409180680/" title="stephen king by pinguino, on Flickr"><img src="http://farm1.staticflickr.com/174/409180680_00007ab974_s.jpg" width="75" height="75" alt="stephen king"></a>
+
+    <a href="http://www.flickr.com/photos/arbron/6338903096/" title="Brandon Sanderson Signing by Arbron, on Flickr"><img src="http://farm7.staticflickr.com/6239/6338903096_6543557193_s.jpg" width="75" height="75" alt="Brandon Sanderson Signing"></a>
+
+    <a href="http://www.flickr.com/photos/lesterpubliclibrary/4325985515/" title="J. D. Salinger by Lester Public Library, on Flickr"><img src="http://farm5.staticflickr.com/4041/4325985515_9063b2697a_s.jpg" width="75" height="75" alt="J. D. Salinger"></a>
+
+    <a href="http://www.flickr.com/photos/opendemocracy/568640456/" title="Lisa Appignanesi - Salman Rushdie's honour by openDemocracy, on Flickr"><img src="http://farm2.staticflickr.com/1388/568640456_447905524b_s.jpg" width="75" height="75" alt="Lisa Appignanesi - Salman Rushdie's honour"></a>
+    </div>
+</div>
+
+</body></html>

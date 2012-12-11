@@ -1,0 +1,214 @@
+var data = {
+    nodes : [
+        {
+        id: 0,
+        name: "Wannabe",
+        level: 0,
+        children: [1,2],
+        parents: [],
+        points: 0,
+        description: {
+            image: "http://farm6.staticflickr.com/5137/5447366517_4f93dfb16e_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },
+        },
+        {
+        id: 1,
+        name: "Hobbiest",
+        level: 1,
+        children: [3],
+        parents: [0],
+        points: 0,
+        description: {
+            image: "http://farm9.staticflickr.com/8019/7882614208_79076cf92e_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },        
+        },
+        {
+        id: 2,
+        name: "Serious",
+        level: 1,
+        children: [3],
+        parents: [0],
+        points: 0,
+        description: {
+            image: "http://farm1.staticflickr.com/115/304341392_3d3f4daaac_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },
+        },
+        {
+        id: 3,
+        name: "Wrote book",
+        level: 2,
+        children: [4,5],
+        parents: [1,2],
+        points: 0,
+        description: {
+            image: "http://farm4.staticflickr.com/3215/2344309646_3434a40c3f_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },              
+        },
+        {
+        id: 4,
+        name: "Traditional",
+        level: 3,
+        children: [7],
+        parents: [3],
+        points: 0,
+        description: {
+            image: "http://farm4.staticflickr.com/3215/2344309646_3434a40c3f_s.jpg",
+            base: "1You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },      
+        },
+        {
+        id: 5,
+        name: "Self-publish",
+        level: 3,
+        children: [6],
+        parents: [3],
+        points: 0,
+        description: {
+            image: "crazyeyes.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },      
+        },
+        {
+        id: 6,
+        name: "Social media darling",
+        level: 4,
+        children: [],
+        parents: [5],
+        points: 0,
+        description: {
+            image: "http://farm1.staticflickr.com/176/437288525_01a05ada4f_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },      
+        },
+        {
+        id: 7,
+        name: "Hard-core author",
+        level: 4,
+        children: [8,9,10],
+        parents: [4],
+        points: 0,
+        description: {
+            image: "http://farm6.staticflickr.com/5219/5384658915_bd43e67792_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },      
+        },        
+        {
+        id: 8,
+        name: "Isolationist",
+        level: 5,
+        children: [10,11],
+        parents: [7],
+        points: 0,
+        description: {
+            image: "http://farm5.staticflickr.com/4041/4325985515_9063b2697a_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },      
+        },
+        {
+        id: 9,
+        name: "Sage",
+        level: 5,
+        children: [],
+        parents: [7],
+        points: 0,
+        description: {
+            image: "http://farm7.staticflickr.com/6239/6338903096_6543557193_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },      
+        },
+        {
+        id: 10,
+        name: "Artiste",
+        level: 6,
+        children: [],
+        parents: [8],
+        points: 0,
+        description: {
+            image: "http://farm2.staticflickr.com/1388/568640456_447905524b_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },      
+        },
+        {
+        id: 11,
+        name: "Recluse",
+        level: 6,
+        children: [],
+        parents: [8],
+        points: 0,  
+        description: {
+            image: "http://farm3.staticflickr.com/2641/4062799418_efb49bccb2_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },      
+        },
+        {
+        id: 12,
+        name: "Corperate Mogul",
+        level: 5,
+        children: [],
+        parents: [7],
+        points: 0,
+        description: {
+            image: "http://farm1.staticflickr.com/174/409180680_00007ab974_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },      
+        },
+        {
+        id: 13,
+        name: "Celebrity",
+        level: 8,
+        children: [],
+        parents: [],
+        points: 0,
+        description: {
+            image: "http://farm9.staticflickr.com/8019/7882614208_79076cf92e_s.jpg",
+            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            level1: "Can whine with the best of them.",
+            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
+            level3: "You should never reach this level ... move on to hobbiest at least!"
+            },      
+        },        
+    ]
+}
