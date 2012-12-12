@@ -12,22 +12,22 @@ var data = {
             base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
             level1: "Can whine with the best of them.",
             level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            level3: "You should never reach this level ... move on to hobbyist at least!"
             },
         },
         {
         id: 1,
-        name: "Hobbiest",
+        name: "Hobbyist",
         level: 1,
         children: [3],
         parents: [0],
         points: 0,
         description: {
             image: "http://farm9.staticflickr.com/8019/7882614208_79076cf92e_s.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "You lurk in coffeeshops and use writing to escape real life.",
+            level1: "Super latte-pounding powers.",
+            level2: "Can find wi-fi from the ether.",
+            level3: "First-name basis with pizza delivery guy."
             },        
         },
         {
@@ -39,55 +39,55 @@ var data = {
         points: 0,
         description: {
             image: "http://farm1.staticflickr.com/115/304341392_3d3f4daaac_s.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "You turn down better jobs to keep writing and then cry yourself to sleep at night.",
+            level1: "Ability to close the door.",
+            level2: "Ability to say no to family members.",
+            level3: "Willingness to give up free Saturdays to write."
             },
         },
         {
         id: 3,
-        name: "Wrote book",
+        name: "Actually wrote a novel",
         level: 2,
         children: [4,5],
         parents: [1,2],
         points: 0,
         description: {
             image: "http://farm4.staticflickr.com/3215/2344309646_3434a40c3f_s.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "You\'ll know this level when you get there.",
+            level1: "Smug attitude.",
+            level2: "Can lecture knowingly online.",
+            level3: "Sudden discovery of revision skills."
             },              
         },
         {
         id: 4,
-        name: "Traditional",
+        name: "Find an agent",
         level: 3,
         children: [7],
         parents: [3],
         points: 0,
         description: {
             image: "http://farm4.staticflickr.com/3215/2344309646_3434a40c3f_s.jpg",
-            base: "1You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "You realize you can hire a minion to do some of the work for you.",
+            level1: "Mass email sending powers.",
+            level2: "Ability to sense a (1) before it arrives.",
+            level3: "Maximum strength rejection shields."
             },      
         },
         {
         id: 5,
-        name: "Self-publish",
+        name: "DIY",
         level: 3,
         children: [6],
         parents: [3],
         points: 0,
         description: {
             image: "crazyeyes.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "Who needs editors, cover artists, and publishers, anyway?",
+            level1: "Blog with the best of them.",
+            level2: "Talk about your Amazon ranking.",
+            level3: "Understanding of iTunes bookstore mechanics."
             },      
         },
         {
@@ -99,10 +99,10 @@ var data = {
         points: 0,
         description: {
             image: "http://farm1.staticflickr.com/176/437288525_01a05ada4f_s.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "People start quoting you... when you were only kidding.",
+            level1: "Army of 1000 <em>friends</em> you\'ve never met.",
+            level2: "Ability to co-opt a sensationalist topic with a straight face.",
+            level3: "Urge blithely suggest college is for the narrow-minded."
             },      
         },
         {
@@ -114,10 +114,10 @@ var data = {
         points: 0,
         description: {
             image: "http://farm6.staticflickr.com/5219/5384658915_bd43e67792_s.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "You find your book at Barnes and Noble.",
+            level1: "Pay a bill with your earnings.",
+            level2: "Cultivate a scrawling signature.",
+            level3: "Have someone recognize you in public."
             },      
         },        
         {
@@ -129,10 +129,10 @@ var data = {
         points: 0,
         description: {
             image: "http://farm5.staticflickr.com/4041/4325985515_9063b2697a_s.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "You renounce all distractions from your art, such as TV and other people.",
+            level1: "Accelerated facial hair growth.",
+            level2: "Magical remote cabin purchasing power.",
+            level3: "Drastically increased paranoia."
             },      
         },
         {
@@ -144,10 +144,10 @@ var data = {
         points: 0,
         description: {
             image: "http://farm7.staticflickr.com/6239/6338903096_6543557193_s.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "Your knowledge overflows until you start lecturing to your cats about writing.",
+            level1: "You get hired to give graduation speeches.",
+            level2: "Actually impart knowledge -- teach a class.",
+            level3: "Get honorary degrees for sneezing."
             },      
         },
         {
@@ -159,10 +159,10 @@ var data = {
         points: 0,
         description: {
             image: "http://farm2.staticflickr.com/1388/568640456_447905524b_s.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "People will beg and/or kill you for your art.",
+            level1: "Guest essays in the New Yorker.",
+            level2: "Inclusion on public school reading lists.",
+            level3: "Both Fatwas and Noble Peace Prizes."
             },      
         },
         {
@@ -174,25 +174,25 @@ var data = {
         points: 0,  
         description: {
             image: "http://farm3.staticflickr.com/2641/4062799418_efb49bccb2_s.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "They\'re all out to get you and your art.",
+            level1: "A miasma of rumor surrounds you.",
+            level2: "Inability to recognize your own face.",
+            level3: "Ability to wipe the memory of your face from mankind."
             },      
         },
         {
         id: 12,
-        name: "Corperate Mogul",
+        name: "Mogul",
         level: 5,
         children: [],
         parents: [7],
         points: 0,
         description: {
             image: "http://farm1.staticflickr.com/174/409180680_00007ab974_s.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
-            level1: "Can whine with the best of them.",
-            level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
-            level3: "You should never reach this level ... move on to hobbiest at least!"
+            base: "The whole point of this was for the money, <em>right</em>?",
+            level1: "Summon a cute assistant at will.",
+            level2: "Sell your own writing book.",
+            level3: "Spielberg is on speed-dial."
             },      
         },
         {
@@ -204,7 +204,7 @@ var data = {
         points: 0,
         description: {
             image: "http://farm9.staticflickr.com/8019/7882614208_79076cf92e_s.jpg",
-            base: "You\'ve got an idea, but aren\'t sure how to start up your word processor.",
+            base: "TBD",
             level1: "Can whine with the best of them.",
             level2: "Ability to guilt your friends into reading your unfinished manuscripts.",
             level3: "You should never reach this level ... move on to hobbiest at least!"

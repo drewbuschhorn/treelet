@@ -3,6 +3,10 @@
     <title>Demo of the tree layout in D3.js</title>
 
     <style>
+        .hc-pic{
+            margin: 2px;
+        }
+    
         .level {
             font-style: italic !important;
         }
@@ -360,7 +364,7 @@ window.oncontextmenu = function(event) {
         <circle class="node-dot" r="10"></circle>
         <text class="pts" id="pts1" text-anchor="middle" dx="0" dy="4">0</text>
         <foreignobject x="622" y="192" width="180" height="180">
-        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label1">Hobbiest</span></body>
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label1">Hobbyist</span></body>
         </foreignobject>        
     </g>
 
@@ -384,7 +388,7 @@ window.oncontextmenu = function(event) {
         <circle class="node-dot" r="10"></circle>
         <text class="pts" id="pts4" text-anchor="middle" dx="0" dy="4">0</text>
         <foreignobject x="622" y="392" width="180" height="180">
-        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label4">Get an agent interested</span></body>
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label4">Found an agent</span></body>
         </foreignobject>           
     </g>
 
@@ -392,7 +396,7 @@ window.oncontextmenu = function(event) {
         <circle class="node-dot" r="10"></circle>
         <text class="pts" id="pts5" text-anchor="middle" dx="0" dy="4">0</text>
         <foreignobject x="422" y="392" width="180" height="180">
-        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label5">Self publish</span></body>
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label5">DIY Publishing</span></body>
         </foreignobject>             
     </g>
 
@@ -416,7 +420,7 @@ window.oncontextmenu = function(event) {
         <circle class="node-dot" r="10"></circle>
         <text class="pts" id="pts8" text-anchor="middle" dx="0" dy="4">0</text>
         <foreignobject x="822" y="592" width="180" height="180">
-        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label8">Isolation</span></body>
+        <body xmlns="http://www.w3.org/1999/xhtml"><span class="label" id="label8">Isolationist</span></body>
         </foreignobject>           
     </g>
  
@@ -457,6 +461,21 @@ window.oncontextmenu = function(event) {
 </div>
 
 <div>
+ <style>*.legend{font-family:"sans-serif"; font-size:smaller;}
+        .legend li{margin-bottom:1em;}</style>
+ <p><h4>Helpful info:</h4>
+    <ol class="legend" >
+        <li>This project will probably only work on Google Chrome at the moment.</li>
+        <li>To get started, place a point of 'experience' in the 'wannabe' level, since we all 
+        start out there.</li>
+        <li>Then, depending on your preference add more points to 'wannabe' or any other level 
+        that opens up <em>( has a black circle around it )</em>.  More points open up new 
+        abilities and levels.</li>
+        <li>Build a description of yourself or your favorite author.  To share your work
+        click the 'Create shareable link' and copy/paste the url generated.</li>
+    </ol>    
+ </p>
+
  <button onclick="javascript:$('#data')[0].value=saveData();$('#data')[0].select();return false;">Create sharable link</button>
  <br/>
  <textarea cols="30" rows="5" name="data" id="data" ></textarea>
