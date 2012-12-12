@@ -162,7 +162,7 @@ var data = {
             base: "People will beg and/or kill you for your art.",
             level1: "Guest essays in the New Yorker.",
             level2: "Inclusion on public school reading lists.",
-            level3: "Both Fatwas and Noble Peace Prizes."
+            level3: "Both <em>Fatwas</em> and Nobel Peace Prizes."
             },      
         },
         {
