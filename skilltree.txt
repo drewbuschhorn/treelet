@@ -62,16 +62,16 @@ var data = {
         },
         {
         id: 4,
-        name: "Find an agent",
+        name: "Found an agent",
         level: 3,
         children: [7],
         parents: [3],
         points: 0,
         description: {
-            image: "http://farm4.staticflickr.com/3215/2344309646_3434a40c3f_s.jpg",
+            image: "A9xyW7-CcAEzAZM.jpg",
             base: "You realize you can hire a minion to do some of the work for you.",
             level1: "Mass email sending powers.",
-            level2: "Ability to sense a (1) before it arrives.",
+            level2: "Ability to sense a <strong><em>(1)</em></strong> before it arrives.",
             level3: "Maximum strength rejection shields."
             },      
         },
@@ -102,7 +102,7 @@ var data = {
             base: "People start quoting you... when you were only kidding.",
             level1: "Army of 1000 <em>friends</em> you\'ve never met.",
             level2: "Ability to co-opt a sensationalist topic with a straight face.",
-            level3: "Urge blithely suggest college is for the narrow-minded."
+            level3: "Urge to blithely suggest college is for the narrow-minded."
             },      
         },
         {

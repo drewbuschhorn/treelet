@@ -142,11 +142,7 @@ function cleanState(){
         $('circle').each(function(){
             this.setAttribute("style","stroke: black; stroke-width:1px");
         }); 
-/*        
-        $('.large').each(function(){
-            this.setAttribute("style","stroke: black; stroke-width:2px");
-        });
-*/
+        
         $('.large').animate({
             strokeWidth: 2,
           }, 500);        
@@ -465,8 +461,8 @@ window.oncontextmenu = function(event) {
         .legend li{margin-bottom:1em;}</style>
  <p><h4>Helpful info:</h4>
     <ol class="legend" >
-        <li>This project will probably only work on Google Chrome at the moment.</li>
-        <li>To get started, place a point of 'experience' in the 'wannabe' level, since we all 
+        <li>This project will probably only work on <strong>Google Chrome</strong> and a decent screen size at the moment.</li>
+        <li>To get started, hover over and click on the 'wannabe' level to place a point of 'experience', since we all 
         start out there.</li>
         <li>Then, depending on your preference add more points to 'wannabe' or any other level 
         that opens up <em>( has a black circle around it )</em>.  More points open up new 
