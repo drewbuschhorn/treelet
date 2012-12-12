@@ -62,7 +62,7 @@ var data = {
         },
         {
         id: 4,
-        name: "Found an agent",
+        name: "Find an agent",
         level: 3,
         children: [7],
         parents: [3],
